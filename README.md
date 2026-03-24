@@ -164,7 +164,7 @@ No Redis. No polling endpoint. No webhook handler. No cleanup cron. No orphan de
 
 ```
 ┌────────────┐  send_intent()   ┌────────────────┐   deliver    ┌──────────────┐
-│            │ ───────────────> │                │ ──────────> │              │
+│            │ ───────────────> │                │ ──────────>  │              │
 │   Client   │                  │   AXME Cloud   │              │   Service    │
 │            │ <── observe() ── │   (platform)   │ <─ resume()  │   (agent)    │
 │            │  real-time SSE   │                │  with result │              │
