@@ -163,14 +163,15 @@ No Redis. No polling endpoint. No webhook handler. No cleanup cron. No orphan de
 ## How It Works
 
 ```
-┌──────────┐    send_intent()     ┌──────────────┐    deliver     ┌─────────────┐
-│  Client   │ ──────────────────► │  AXME Cloud   │ ────────────► │   Service   │
-│           │                     │  (platform)   │               │   (agent)   │
-│           │ ◄──── observe() ──  │               │ ◄── resume()  │             │
-│           │   real-time SSE     │  retries,     │   with result │  processes  │
-└──────────┘                     │  timeouts,    │               │  the work   │
-                                  │  delivery     │               └─────────────┘
-                                  └──────────────┘
+┌────────────┐  send_intent()   ┌────────────────┐   deliver    ┌──────────────┐
+│            │ ───────────────> │                │ ──────────> │              │
+│   Client   │                  │   AXME Cloud   │              │   Service    │
+│            │ <── observe() ── │   (platform)   │ <─ resume()  │   (agent)    │
+│            │  real-time SSE   │                │  with result │              │
+└────────────┘                  │   retries,     │              │  processes   │
+                                │   timeouts,    │              │  the work    │
+                                │   delivery     │              │              │
+                                └────────────────┘              └──────────────┘
 ```
 
 1. Client submits an **intent** — a request that completes later
