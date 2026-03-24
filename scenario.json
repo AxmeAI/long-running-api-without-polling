@@ -1,0 +1,36 @@
+{
+  "scenario_id": "long-running-api.demo.v1",
+  "title": "Long-running API without polling - report generation",
+  "description": "Submit a report generation intent. The report-service agent processes it via SSE stream and resumes with the result. No polling, no webhooks.",
+
+  "agents": [
+    {
+      "role": "report_service",
+      "address": "report-service-demo",
+      "display_name": "Report Service",
+      "delivery_mode": "stream",
+      "create_if_missing": true
+    }
+  ],
+
+  "workflow": {
+    "steps": [
+      {
+        "step_id": "generate_report",
+        "tool_id": "tool.agent.task.v1",
+        "assigned_to": "report_service",
+        "step_deadline_seconds": 120
+      }
+    ]
+  },
+
+  "intent": {
+    "type": "intent.report.generate.v1",
+    "payload": {
+      "report_type": "quarterly",
+      "format": "pdf",
+      "quarter": "Q1-2026"
+    },
+    "max_delivery_attempts": 3
+  }
+}
